@@ -35,44 +35,10 @@ class VideoConcerateAndFit{
 }
 
 
-async function main(){
-  let btn = document.createElement("button")
-  btn.innerText="Hold And Speek"
-  btn.onmousedown =  async e => {
-    await vid.capture();
-  };
-  btn.onmouseup = async e => {
-    await vid.stop();
-  };
-
-  let vid;
-  let start = document.createElement("button")
-  let btn_type=0
-  let end=true
-  start.innerText="To Camera =>";
-  start.onclick = async () => {
-    if (!end)
-      return
-    
-    end = false
-    btn_type = btn_type*(-1)+1
-
-    if (btn_type) {
-      vid = new VideoConcerateAndFit();
-      await vid.start();
-      start.innerText="<= exit camera";
-      dmain.appendChild(btn);
-      end=true
-    } else {
-      vid.stop();
-      start.innerText="To Camera =>";
-      dmain.removeChild(btn);
-      end=true;
-      return vid.VideoMap;
-    }
-    start.innerText = btn_type ? "<= exit camera" : "To Camera =>";
-  }
-
-  dmain.appendChild(start);
+function main(){
+    let vid = new VideoConcerateAndFit();
+    vid.start();
+    vid.capture();
+    vid.stop();    
 }
 
