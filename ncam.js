@@ -1,8 +1,4 @@
-var dmain=document.createElement("div");
-document.body.append(dmain);
-
 class VideoConcerateAndFit{
-  
   constructor(resolution=0.4, color_dim=1) {
     this.videoMap = [];
    	this.cdim=color_dim;
@@ -13,12 +9,10 @@ class VideoConcerateAndFit{
     this.stream = await navigator.mediaDevices.getUserMedia({video:true})
     this.video.srcObject = this.stream;
     await this.video.play();
-    dmain.appendChild(this.video);
   }
   
   async stop(){
   	this.stream.getTracks().forEach(track=>track.stop());
-    dmain.removeChild(this.video)
   }
   
   async capture(){
@@ -39,6 +33,7 @@ function main(){
     let vid = new VideoConcerateAndFit();
     vid.start();
     vid.capture();
-    vid.stop();    
+    vid.stop();
+    return vid.videoMap;
 }
 
