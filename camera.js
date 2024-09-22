@@ -1,3 +1,6 @@
+var dmain=document.createElement("div");
+document.body.append(dmain);
+
 class VideoConcerateAndFit{
   
   constructor(resolution=0.4, color_dim=1) {
@@ -10,19 +13,18 @@ class VideoConcerateAndFit{
     this.stream = await navigator.mediaDevices.getUserMedia({video:true})
     this.video.srcObject = this.stream;
     await this.video.play();
-    document.body.appendChild(this.video);
+    dmain.appendChild(this.video);
   }
   
   async stop(){
   	this.stream.getTracks().forEach(track=>track.stop());
-    document.body.removeChild(this.video)
+    dmain.removeChild(this.video)
   }
   
   async capture(){
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     
-    console.log(this.video.videoWidth, this.video.videoHeight)
     canvas.width = this.video.videoWidth;
     canvas.height = this.video.videoHeight;
     ctx.drawImage(this.video, 0, 0);
@@ -30,20 +32,7 @@ class VideoConcerateAndFit{
 //     console.log(imgData.data)
     this.videoMap.push(canvas.toDataURL('image/jpeg', this.res));
   }
-
 }
-
-class Storage{
-  constructor(){
-    
-  }
-
-
-  button(){
-
-  }
-}
-
 
 
 function main(){
@@ -71,18 +60,18 @@ function main(){
       vid = new VideoConcerateAndFit();
       await vid.start();
       start.innerText="<= exit camera";
-      document.body.appendChild(btn);
+      dmain.appendChild(btn);
       end=true
     } else {
       vid.stop();
       start.innerText="To Camera =>";
-      document.body.removeChild(btn);
-      end=true
-      return vid.VideoMap
+      dmain.removeChild(btn);
+      end=true;
+      return vid.VideoMap;
     }
     start.innerText = btn_type ? "<= exit camera" : "To Camera =>";
   }
 
-  document.body.appendChild(start);
+  dmain.appendChild(start);
 }
 
